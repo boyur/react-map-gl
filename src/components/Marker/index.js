@@ -3,6 +3,7 @@
 import { render, unmountComponentAtNode } from 'react-dom';
 import { PureComponent, createElement } from 'react';
 import type { Element } from 'react';
+import type MapboxMap from 'mapbox-gl/src/ui/map';
 
 import MapContext from '../MapContext';
 import mapboxgl from '../../utils/mapbox-gl';

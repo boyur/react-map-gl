@@ -2,6 +2,7 @@
 import supercluster from 'supercluster';
 import { Children, PureComponent, createElement, version } from 'react';
 import type { Node, Component } from 'react';
+import type MapboxMap from 'mapbox-gl/src/ui/map';
 
 import Marker from '../Marker';
 import MapContext from '../MapContext';

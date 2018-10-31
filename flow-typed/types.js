@@ -1,30 +1,33 @@
 // @flow
+import type Map from 'mapbox-gl/src/ui/map';
+import type { Map as ImmutableMap } from 'immutable';
+import type { MapMouseEvent, MapTouchEvent } from 'mapbox-gl/src/ui/events';
 
-import Immutable from 'immutable';
 import type {
-  Map,
-  StyleSpecification,
-  SourceSpecification,
   LayerSpecification,
-  MapMouseEvent,
-  MapTouchEvent
-} from 'mapbox-gl';
+  StyleSpecification,
+  SourceSpecification
+} from 'mapbox-gl/src/style-spec/types';
 
-declare type MapboxMap = Map;
+declare type MapboxMap = {
+  getStyle: () => StyleSpecification,
+  getLayer: (id: string) => LayerSpecification,
+  getSource: (id: string) => SourceSpecification
+} & Map;
 
 declare type MapboxLayer = LayerSpecification;
 
 declare type MapStyle = {
   toJS: () => StyleSpecification
-} & Immutable.Map<string, any>;
+} & ImmutableMap<string, any>;
 
 declare type MapSource = {
   toJS: () => SourceSpecification
-} & Immutable.Map<string, any>;
+} & ImmutableMap<string, any>;
 
 declare type MapLayer = {
   toJS: () => LayerSpecification
-} & Immutable.Map<string, any>;
+} & ImmutableMap<string, any>;
 
 declare type Viewport = {
   latitude: number,

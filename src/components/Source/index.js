@@ -2,8 +2,15 @@
 
 import { PureComponent, createElement } from 'react';
 import { isImmutable } from 'immutable';
+import type { Map as ImmutableMap } from 'immutable';
+import type { SourceSpecification } from 'mapbox-gl/src/style-spec/types';
 
 import MapContext from '../MapContext';
+import type { MapboxMap } from '../MapGL';
+
+export type MapSource = {
+  toJS: () => SourceSpecification
+} & ImmutableMap<string, any>;
 
 type Props = {
   /** Mapbox GL Source id */

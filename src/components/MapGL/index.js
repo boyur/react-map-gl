@@ -2,6 +2,12 @@
 
 import { Children, PureComponent, createElement, cloneElement } from 'react';
 import { isImmutable } from 'immutable';
+import type Map from 'mapbox-gl/src/ui/map';
+import type {
+  LayerSpecification,
+  StyleSpecification,
+  SourceSpecification
+} from 'mapbox-gl/src/style-spec/types';
 import type { Node } from 'react';
 import type { EventProps } from './eventProps';
 
@@ -10,6 +16,12 @@ import MapContext from '../MapContext';
 import mapboxgl from '../../utils/mapbox-gl';
 import events from './events';
 import capitalizeFirstLetter from '../../utils/capitalizeFirstLetter';
+
+export type MapboxMap = {
+  getStyle: () => StyleSpecification,
+  getLayer: (id: string) => LayerSpecification,
+  getSource: (id: string) => SourceSpecification
+} & Map;
 
 type Props = EventProps & {
   /** container className */
@@ -256,7 +268,7 @@ class MapGL extends PureComponent<Props, State> {
       ? this.props.mapStyle.toJS()
       : this.props.mapStyle;
 
-    const map = new mapboxgl.Map({
+    const map: MapboxMap = new mapboxgl.Map({
       container: this._container,
       style: mapStyle,
       interactive: !!this.props.onViewportChange,

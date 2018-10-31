@@ -2,10 +2,17 @@
 
 import { PureComponent, createElement } from 'react';
 import { is, isImmutable } from 'immutable';
+import type { LayerSpecification } from 'mapbox-gl/src/style-spec/types';
+import type { Map as ImmutableMap } from 'immutable';
+import type { MapboxMap } from '../MapGL';
 
 import MapContext from '../MapContext';
 import diff from '../../utils/diff';
 import queryRenderedFeatures from '../../utils/queryRenderedFeatures';
+
+type MapLayer = {
+  toJS: () => LayerSpecification
+} & ImmutableMap<string, any>;
 
 type Props = {
   /** Mapbox GL Layer id */
@@ -92,10 +99,10 @@ class Layer extends PureComponent<Props> {
   }
 
   componentDidMount() {
-    const map = this._map;
+    const map: MapboxMap = this._map;
     const { layer, before } = this.props;
 
-    const mapboxLayer: MapboxLayer = layer.toJS();
+    const mapboxLayer: LayerSpecification = layer.toJS();
     if (before && map.getLayer(before)) {
       map.addLayer(mapboxLayer, before);
     } else {
@@ -113,7 +120,8 @@ class Layer extends PureComponent<Props> {
     const prevLayer = prevProps.layer;
 
     if (this.props.before !== prevProps.before) {
-      this._map.moveLayer(newLayer.get('id'), this.props.before);
+      const newLayerId: string = newLayer.get('id');
+      this._map.moveLayer(newLayerId, this.props.before);
     }
 
     if (!is(newLayer, prevLayer)) {
